@@ -257,6 +257,8 @@ module Juggernaut
               clients = Juggernaut::Client.find_all
             end
             publish clients.to_json
+          when :show_connected_clients
+            publish Juggernaut::Client.find_all.select{ |c| c.alive? }.to_json
           when :show_client
             query_needs :client_id
             publish Juggernaut::Client.find_by_id(@request[:client_id]).to_json
